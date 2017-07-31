@@ -1,9 +1,5 @@
 package net.demilich.metastone.gui.gameconfig;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -16,10 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import net.demilich.metastone.game.behaviour.GreedyOptimizeMove;
-import net.demilich.metastone.game.behaviour.IBehaviour;
-import net.demilich.metastone.game.behaviour.NoAggressionBehaviour;
-import net.demilich.metastone.game.behaviour.PlayRandomBehaviour;
+import net.demilich.metastone.game.behaviour.*;
 import net.demilich.metastone.game.behaviour.heuristic.WeightedHeuristic;
 import net.demilich.metastone.game.behaviour.human.HumanBehaviour;
 import net.demilich.metastone.game.behaviour.mcts.MonteCarloTreeSearch;
@@ -38,6 +31,10 @@ import net.demilich.metastone.gui.common.BehaviourStringConverter;
 import net.demilich.metastone.gui.common.DeckStringConverter;
 import net.demilich.metastone.gui.common.HeroStringConverter;
 import net.demilich.metastone.gui.playmode.config.PlayerConfigType;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerConfigView extends VBox {
 
@@ -169,7 +166,9 @@ public class PlayerConfigView extends VBox {
 		behaviourList.add(new PlayRandomBehaviour());
 
 		behaviourList.add(new GreedyOptimizeMove(new WeightedHeuristic()));
+		behaviourList.add(new GreedyOptimizeTurn(new WeightedHeuristic()));
 		behaviourList.add(new NoAggressionBehaviour());
+		behaviourList.add(new StochasticOptimizeMove(new WeightedHeuristic()));
 
 		//added
 		behaviourList.add(new MonteCarloTreeSearch());

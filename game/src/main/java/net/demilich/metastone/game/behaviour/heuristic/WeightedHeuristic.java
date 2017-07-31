@@ -71,4 +71,14 @@ public class WeightedHeuristic implements IGameStateHeuristic {
 	public void onActionSelected(GameContext context, int playerId) {
 	}
 
+	@Override
+	public double getScaledScore(GameContext context, int playerId){
+		double lb = -40;
+		double ub = 40;
+		double range = 80;
+		double score = getScore(context, playerId);
+		if (score <= lb) return 0.0;
+		if (score >= ub) return 1.0;
+		return (score + ub)/range;
+	}
 }

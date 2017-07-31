@@ -1,13 +1,13 @@
 package net.demilich.metastone.game.behaviour;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import net.demilich.metastone.game.GameContext;
 import net.demilich.metastone.game.Player;
 import net.demilich.metastone.game.actions.GameAction;
 import net.demilich.metastone.game.cards.Card;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class PlayRandomBehaviour extends Behaviour {
 
@@ -29,7 +29,7 @@ public class PlayRandomBehaviour extends Behaviour {
 			return validActions.get(0);
 		}
 
-		int randomIndex = random.nextInt(validActions.size());
+		int randomIndex = random.nextInt(validActions.size()-1);
 		GameAction randomAction = validActions.get(randomIndex);
 		return randomAction;
 	}

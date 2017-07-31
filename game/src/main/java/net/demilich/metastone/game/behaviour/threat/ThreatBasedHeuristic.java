@@ -1,8 +1,5 @@
 package net.demilich.metastone.game.behaviour.threat;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.demilich.metastone.game.Attribute;
 import net.demilich.metastone.game.GameContext;
 import net.demilich.metastone.game.Player;
@@ -11,6 +8,9 @@ import net.demilich.metastone.game.cards.Card;
 import net.demilich.metastone.game.entities.heroes.Hero;
 import net.demilich.metastone.game.entities.heroes.HeroClass;
 import net.demilich.metastone.game.entities.minions.Minion;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ThreatBasedHeuristic implements IGameStateHeuristic {
 
@@ -174,6 +174,12 @@ public class ThreatBasedHeuristic implements IGameStateHeuristic {
 	@Override
 	public void onActionSelected(GameContext context, int playerId) {
 
+	}
+
+	@Override
+	public double getScaledScore(GameContext context, int playerId)
+	{
+		return -1;
 	}
 
 }

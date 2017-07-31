@@ -1,14 +1,14 @@
 package net.demilich.metastone.game.behaviour.mcts;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 import net.demilich.metastone.game.GameContext;
 import net.demilich.metastone.game.Player;
 import net.demilich.metastone.game.actions.GameAction;
-import net.demilich.metastone.game.behaviour.PlayRandomBehaviour;
-import net.demilich.metastone.game.entities.Actor;
+import net.demilich.metastone.game.behaviour.StochasticOptimizeMove;
+import net.demilich.metastone.game.behaviour.heuristic.WeightedHeuristic;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 class Node {
 
@@ -17,7 +17,7 @@ class Node {
 	private final List<Node> children = new LinkedList<>();
 	private final GameAction incomingAction;
 	private int visits;
-	private int score;
+	private double score;
 	private final int player;
 	private int numSample = 3;
 
@@ -69,11 +69,14 @@ class Node {
 
 	public GameAction getBestAction() {
 		GameAction best = null;
-		int bestScore = Integer.MIN_VALUE;
+		double bestScore = Double.MIN_VALUE;
+		System.out.println("***************getBestAction***************");
 		for (Node node : children) {
-			if (node.getScore() > bestScore) {
+			if (node.getAvgScore() > bestScore) {
 				best = node.incomingAction;
-				bestScore = node.getScore();
+				bestScore = node.getAvgScore();
+				System.out.println("Action: " + node.incomingAction.toString());
+				System.out.println("Score: " +  node.getAvgScore());
 			}
 		}
 		return best;
@@ -87,8 +90,12 @@ class Node {
 		return player;
 	}
 
-	public int getScore() {
+	public double getScore() {
 		return score;
+	}
+
+	public double getAvgScore() {
+		return score/visits;
 	}
 
 	public GameContext getState() {
@@ -153,13 +160,17 @@ class Node {
 			}
 		}
 
-		int value = rollOut(current);
+		double value = rollOut(current);
 		for (Node node : visited) {
-			node.updateStats(value);
+			if (node.player == node.getState().getActivePlayerId()){
+				node.updateStats(value);
+			}else {
+				node.updateStats(1.0 - value);
+			}
 		}
 	}
 
-	public int rollOut(Node node) {
+	public double rollOut(Node node) {
 		if (node.getState().gameDecided()) {
 			GameContext state = node.getState();
 			return state.getWinningPlayerId() == getPlayer() ? 1 : 0;
@@ -167,16 +178,24 @@ class Node {
 
 		GameContext simulation = node.getState().clone();
 		for (Player player : simulation.getPlayers()) {
-			player.setBehaviour(new PlayRandomBehaviour());
+			player.setBehaviour(new StochasticOptimizeMove(new WeightedHeuristic()));
 		}
 
 		int turnCount = 0;
-		simulation.playTurn();
-
-		return simulation.getWinningPlayerId() == getPlayer() ? 1 : 0;
+		while (turnCount < Utils.rolloutDepth){
+			simulation.playTurn();
+			if (simulation.gameDecided()) return state.getWinningPlayerId() == getPlayer() ? 1 : 0;
+			turnCount++;
+		}
+		double value = Utils.getScore(simulation, simulation.getActivePlayerId());
+		if (simulation.getActivePlayerId() == player){
+			return value;
+		}else {
+			return 1.0 - value;
+		}
 	}
 
-	private void updateStats(int value) {
+	private void updateStats(double value) {
 		visits++;
 		score += value;
 	}

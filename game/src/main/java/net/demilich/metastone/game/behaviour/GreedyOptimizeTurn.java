@@ -1,22 +1,22 @@
 package net.demilich.metastone.game.behaviour;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import net.demilich.metastone.game.GameContext;
 import net.demilich.metastone.game.Player;
 import net.demilich.metastone.game.actions.ActionType;
 import net.demilich.metastone.game.actions.GameAction;
 import net.demilich.metastone.game.behaviour.heuristic.IGameStateHeuristic;
 import net.demilich.metastone.game.cards.Card;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class GreedyOptimizeTurn extends Behaviour {
 
 	private final Logger logger = LoggerFactory.getLogger(GreedyOptimizeTurn.class);
+//	PrintWriter writer;
 
 	private final IGameStateHeuristic heuristic;
 
@@ -26,6 +26,11 @@ public class GreedyOptimizeTurn extends Behaviour {
 
 	public GreedyOptimizeTurn(IGameStateHeuristic heuristic) {
 		this.heuristic = heuristic;
+//		try{
+//			writer = new PrintWriter("score.txt", "UTF-8");
+//		} catch (IOException e) {
+//
+//		}
 	}
 
 	private double alphaBeta(GameContext context, int playerId, GameAction action, int depth) {
@@ -48,6 +53,7 @@ public class GreedyOptimizeTurn extends Behaviour {
 		} else {
 			for (GameAction gameAction : validActions) {
 				score = Math.max(score, alphaBeta(simulation, playerId, gameAction, depth - 1));
+//				writer.println(score + "\n");
 				if (score >= 10000) {
 					break;
 				}
