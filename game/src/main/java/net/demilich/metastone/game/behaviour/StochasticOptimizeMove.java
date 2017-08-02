@@ -79,7 +79,7 @@ public class StochasticOptimizeMove extends Behaviour {
 	public GameAction selectAction(List<GameAction> actionList, double[] valueArr){
 		GameAction selectedAction = null;
 
-		softmax(valueArr, 0.1);
+		softmax(valueArr, 0.5);
 
 //		for (int i = 0; i < actionList.size(); i++) {
 //			GameAction gameAction = actionList.get(i);

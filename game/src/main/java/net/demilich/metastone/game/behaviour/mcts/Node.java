@@ -70,13 +70,13 @@ class Node {
 	public GameAction getBestAction() {
 		GameAction best = null;
 		double bestScore = Double.MIN_VALUE;
-		System.out.println("***************getBestAction***************");
+//		System.out.println("***************getBestAction***************");
 		for (Node node : children) {
 			if (node.getAvgScore() > bestScore) {
 				best = node.incomingAction;
 				bestScore = node.getAvgScore();
-				System.out.println("Action: " + node.incomingAction.toString());
-				System.out.println("Score: " +  node.getAvgScore());
+//				System.out.println("Action: " + node.incomingAction.toString());
+//				System.out.println("Score: " +  node.getAvgScore());
 			}
 		}
 		return best;
@@ -109,7 +109,7 @@ class Node {
 	public void initState(GameContext state, List<GameAction> validActions) {
 		this.state = state.clone();
 		this.validTransitions = new ArrayList<GameAction>(validActions);
-		if (this.validTransitions.size() == 0){
+		if (this.validTransitions.size() == 0 && !this.state.gameDecided()){
 			this.isChanceNode = true;
 			sampleNextTurn();
 		}

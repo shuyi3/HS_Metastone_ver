@@ -1,32 +1,8 @@
 package net.demilich.metastone.gui.deckbuilder;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import net.demilich.metastone.utils.MetastoneProperties;
-import net.demilich.metastone.utils.ResourceInputStream;
-import net.demilich.metastone.utils.ResourceLoader;
-import net.demilich.metastone.utils.UserHomeMetastone;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
 import net.demilich.metastone.GameNotification;
 import net.demilich.metastone.game.cards.Card;
 import net.demilich.metastone.game.cards.CardCatalogue;
@@ -35,10 +11,24 @@ import net.demilich.metastone.game.cards.CardSet;
 import net.demilich.metastone.game.decks.Deck;
 import net.demilich.metastone.game.decks.DeckFormat;
 import net.demilich.metastone.game.decks.MetaDeck;
-import net.demilich.metastone.game.entities.heroes.HeroClass;
 import net.demilich.metastone.game.decks.validation.DefaultDeckValidator;
 import net.demilich.metastone.game.decks.validation.IDeckValidator;
+import net.demilich.metastone.game.entities.heroes.HeroClass;
+import net.demilich.metastone.utils.MetastoneProperties;
+import net.demilich.metastone.utils.ResourceInputStream;
+import net.demilich.metastone.utils.ResourceLoader;
+import net.demilich.metastone.utils.UserHomeMetastone;
 import net.demilich.nittygrittymvc.Proxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.*;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class DeckProxy extends Proxy<GameNotification> {
 

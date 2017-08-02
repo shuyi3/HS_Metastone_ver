@@ -15,7 +15,7 @@ public class MonteCarloTreeSearch extends Behaviour {
 
 	private final static Logger logger = LoggerFactory.getLogger(MonteCarloTreeSearch.class);
 
-	private static final int ITERATIONS = 50;
+	private static final int ITERATIONS = 5000;
 
 	@Override
 	public String getName() {
@@ -41,21 +41,16 @@ public class MonteCarloTreeSearch extends Behaviour {
 		}
 		Node root = new Node(null, player.getId());
 
-		System.out.println("Valid actions ======================");
-		for (GameAction action : validActions){
-			System.out.println(action.toString());
-		}
-
 		root.initState(context, validActions);
 		UctPolicy treePolicy = new UctPolicy();
 		for (int i = 0; i < ITERATIONS; i++) {
 			root.process(treePolicy);
 			if (i % 200 == 0){
-				logger.info("{}th simulation", i);
+//				logger.info("{}th simulation", i);
 			}
 		}
 		GameAction bestAction = root.getBestAction();
-		logger.info("MCTS selected best action {}", bestAction);
+//		logger.info("MCTS selected best action {}", bestAction);
 		return bestAction;
 	}
 

@@ -1,8 +1,5 @@
 package net.demilich.metastone.gui.simulationmode;
 
-import java.io.IOException;
-import java.util.List;
-
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,8 +15,11 @@ import net.demilich.metastone.GameNotification;
 import net.demilich.metastone.NotificationProxy;
 import net.demilich.metastone.game.decks.Deck;
 import net.demilich.metastone.game.decks.DeckFormat;
-import net.demilich.metastone.gui.common.DeckFormatStringConverter;
 import net.demilich.metastone.game.gameconfig.GameConfig;
+import net.demilich.metastone.gui.common.DeckFormatStringConverter;
+
+import java.io.IOException;
+import java.util.List;
 
 public class SimulationModeConfigView extends BorderPane implements EventHandler<ActionEvent> {
 
@@ -117,6 +117,8 @@ public class SimulationModeConfigView extends BorderPane implements EventHandler
 		ObservableList<Integer> numberOfGamesEntries = FXCollections.observableArrayList();
 		numberOfGamesEntries.add(1);
 		numberOfGamesEntries.add(10);
+		numberOfGamesEntries.add(25);
+		numberOfGamesEntries.add(50);
 		numberOfGamesEntries.add(100);
 		numberOfGamesEntries.add(1000);
 		numberOfGamesEntries.add(10000);

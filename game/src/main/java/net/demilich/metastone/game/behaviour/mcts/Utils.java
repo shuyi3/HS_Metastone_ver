@@ -14,7 +14,7 @@ public class Utils {
     private final static int numSample = 3;
     private static Random rng = null;
     private static IGameStateHeuristic heuristic = null;
-    public  final static int rolloutDepth = 3;
+    public  final static int rolloutDepth = 5;
 
     public static Random getRng(){
         if (rng == null) rng = new Random();
